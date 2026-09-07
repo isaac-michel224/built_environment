@@ -144,9 +144,6 @@ broom::glance(com.fall)
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #+
 #+Re Analysis of OLS Models#
-# Prepare needed libraries
-#Using Robust Regression
-#https://stats.oarc.ucla.edu/r/dae/robust-regression/
 
 library(MASS)
 a2 <- analysis[c(-4,-9), ] #Remove Mattpan and Dorchester from dataset, down from n = 15 to n = 13 observations
@@ -203,6 +200,7 @@ anova(hos.sp.2, hos.sp.3)
 
 ols_vif_tol(hos.sp.2)
 
+#Partial Correlation for 'a2' Data set
 spcor(as.matrix(analysis))
 
 correlation_matrix(a2,
@@ -210,21 +208,13 @@ correlation_matrix(a2,
                    digits = 2, 
                    show_significance = TRUE,
 )
+
 #Diagnostics from OLS Model
 
 opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 plot(pd_a, las = 1)
 
-
-#os.Spring -- 4,5,16,10 leverage or residuals
-#os.fall -- 5,7,11
-
-#d1 <- cooks.distance(pd_a)
-#r <- stdres(pd_a)
-#a <- cbind(analysis, d1, r)
-#a[d1 > 4/15, ]
-
-#For pdx model, Dorchester, Mattapan and Roxbury appear to have either high leverage or residual in the data. 
+#Dorchester, Mattapan and Roxbury appear to have either high leverage or residual in the data. 
  
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -286,6 +276,5 @@ plot(open.fall.count, which = 5)
 
 #Residuals
 
-library(olsrr)
 ols_plot_resid_stud(open.spr.count)
 ols_plot_resid_stud(open.fall.count)
