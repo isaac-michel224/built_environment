@@ -106,7 +106,6 @@ correlation_matrix(data,
 
 #---OLS Model ---#
 #This analysis will be using both Spring and Fall Rates
-#library(MASS)
 
 #Predictor 1: Population Density
 #summary(pdx <- lm(Spring_Rate ~ pop_density + hh_size + high_school + service_employed, data=analysis)) #Significance
@@ -224,27 +223,6 @@ ols_vif_tol(hos.sp.3)
 
 spcor(as.matrix(analysis))
 
-
-
-#summary(rr.pdx <- rlm(Fall_Rate ~ pop_density + hh_size + high_school + service_employed + Hispanic + public_transit, data=analysis))
-
-#+Based on part correlations for covariates except public transit, it makes sense 
-#+to drop them all (hh_size, high school, Hispanic, service_employed)
-
-#summary(os.spring <- lm(Spring_Rate ~ open_space + hh_size + high_school + service_employed + Hispanic + public_transit, data=a2))  
-#summary(os.fall <- lm(Fall_Rate ~ open_space +  hh_size + high_school + service_employed + Hispanic + public_transit, data = a2))
-
-#summary(hos.spring <- lm(Spring_Rate ~ hos_density + hh_size + high_school + service_employed + Hispanic + public_transit, data=a2))  
-#summary(hos.fall <- lm(Fall_Rate ~ hos_density +  hh_size + high_school + service_employed + Hispanic + public_transit, data = a2))
-
-#summary(com.spring <- lm(Spring_Rate ~ comm_cen_dens + hh_size + high_school + service_employed + Hispanic + public_transit, data=a2))  
-#summary(com.fall <- lm(Fall_Rate ~ comm_cen_dens +  hh_size + high_school + service_employed + Hispanic + public_transit, data = a2))
-
-
-
-
-
-
 correlation_matrix(a2,
                    type = "pearson", 
                    digits = 2, 
@@ -271,52 +249,12 @@ plot(pd_a, las = 1)
 
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#+
-#+
-#---Poisson Regression--#
-#Documentation: https://stats.oarc.ucla.edu/r/dae/poisson-regression/
+#
 #This analysis will be using both Spring and Fall Case Counts
 library(ggplot2)
 library(sandwich)
 library(msm)
-
-colnames(analysis)
-
-#Pop Density
-#Discussion: Since People were not working or jobs were not hiring or limited, this could explain the Poisson models with pop density as an indicator
-
-summary(m1 <- glm(formula = Spring_Case_Count ~ pop_density +
-+hh_size + public_transit, family = poisson, data = analysis))
-
-#Spring Robust SE 
-
-cov.m1 <- vcovHC(m1, type = "HC0")
-std.err <- sqrt(diag(cov.m1))
-r.est <- cbind(Estimate= coef(m1), "Robust SE" = std.err,
-               "Pr(>|z|)" = 2 * pnorm(abs(coef(m1)/std.err), lower.tail = FALSE),
-               LL = coef(m1) - 1.96 * std.err,
-               UL = coef(m1) + 1.96 * std.err)
-
-r.est
-
-#OverDisperson
-library(performance)
-check_overdispersion(m1)
-#OverDispersion was detected
-
-#Negative bionomial model
-
-library(MASS)
-m2 <- glm.nb(formula = Spring_Case_Count ~ pop_density + 
-               hh_size + public_transit, data = analysis)
-
-summary(m2)
-
-#Checking Model Assumption
-pchisq(2 * (logLik(m2) - logLik(m1)), df = 1, lower.tail = FALSE)
-
-
-
+library(car)
 
 
 #QuasiPoisson model may be better since the dataset has a small sample size
@@ -330,7 +268,6 @@ summary(m3)
 cor_matrix <- cor(analysis, use = "complete.obs")
 print(cor_matrix)
 
-library(car)
 
 vif(m3)
 
@@ -340,8 +277,6 @@ colnames(analysis)
 
 summary(p.fall.count <- glm(formula = Fall_Case_Count ~ pop_density
                             + hh_size + public_transit, family = quasipoisson, data = analysis))
-
-
 
 #Open Space
 summary(open.spr.count <- glm(formula = Spring_Case_Count ~ open_space + pop_density + 
@@ -356,5 +291,22 @@ vif(open.fall.count)
 
 #Model Diagnostic
 
+
+#DFBETA Plots
 dfbetaPlots(open.spr.count)
 dfbetaPlots(open.fall.count)
+
+#Cook's Distance Plots
+
+plot(open.spr.count, which = 4)
+plot(open.fall.count, which = 4)
+
+#Leverage
+plot(open.spr.count, which = 5)
+plot(open.fall.count, which = 5)
+
+#Residuals
+
+library(olsrr)
+ols_plot_resid_stud(open.spr.count)
+ols_plot_resid_stud(open.fall.count)

@@ -57,7 +57,6 @@ Population density (p < .05) was positively associated with COVID-19 incidence a
 to work using public transportation. The model explains about 48% of the overall data.  
 
 ## QuasiPoisson 
-The estimated dispersion parameter was 38.02, indicating substantial overdispersion relative to the standard Poisson assumption. 
 Population density, household size, and public transit were all positively associated with spring case counts. Population density was statistically significant (β = 0.000252, SE = 0.000060, p = 0.001), corresponding to an estimated 28.8% increase in expected spring case counts for every 1,000-unit increase in population density, holding other covariates constant. 
 Household size was also positively associated with case counts (β = 2.978, SE = 0.593, p < 0.001), while public transit was positively associated with case counts (β = 4.295, SE = 1.590, p = 0.021). 
 Given the small sample size (n = 15), these estimates should be interpreted cautiously.
