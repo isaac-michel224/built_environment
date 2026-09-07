@@ -3,8 +3,7 @@
 Built environment is described by as “all manufactured structures, including buildings, transportation systems and other physical surroundings constructed by humans”. 
 This encompasses the roads, green spaces, sidewalks, housing and overall land people use daily. 
 Since we spend most of our time in the built environment, it is important to recognize the risks associated with it.
-Previous research has shown how the built environment impacts our health. Green space promotes physical activity, which in has positive effects on combating mental health and boosting immunity.  
-Living in close proximity to recreational open space was associated with lower BMI. Areas categorized as rural areas were found to have worse health outcomes in chronic illnesses and self-rated health. 
+Previous research has shown how the built environment impacts our health. Green space promotes physical activity, which in has positive effects on combating mental health and boosting immunity. Living in close proximity to recreational open space was associated with lower BMI. Areas categorized as rural areas were found to have worse health outcomes in chronic illnesses and self-rated health. 
 The presence of highways were related to better health outcomes since they provide ease of access to travel to obtain resources. Characteristics of the built environment influence infectious disease outcomes as well, especially COVID-19. 
 A previous study in New York found an association between percentage of sidewalks in a given area and COVID-19 incidence. 
 Another study in Washington found that overcrowding correlated with increased incidence rates and increased open space was correlated with lowering COVID-19 incidence rates. 
