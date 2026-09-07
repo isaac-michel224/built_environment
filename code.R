@@ -4,8 +4,8 @@ library(readxl)
 
 
 #Bring in Outcome Variable and Main Predictors
-out_data <- read_excel("C:/Users/michelia/Documents/Boston_Built_Environment/Boston_Crosswalk_ZIP_.xlsx")
-pre_data <- read_excel("C:/Users/michelia/Documents/Boston_Built_Environment/Open_Space_prop.xlsx")
+out_data <- read_excel("data/Boston_Crosswalk_ZIP_.xlsx")
+pre_data <- read_excel("data/Open_Space_prop.xlsx")
 
 colnames(out_data)
 odt <- out_data %>%

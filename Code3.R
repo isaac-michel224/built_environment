@@ -21,8 +21,8 @@ for (i in 1:length(library.list)) {
 rm(library.list)
 
 
-spring <- read.csv("C:/Users/michelia/Documents/Boston_Built_Environment/COVID-19 Cases and Rates by Neighborhood. 04-26-2020 to 05-09-2020.csv")
-fall <- read.csv("C:/Users/michelia/Documents/Boston_Built_Environment/COVID-19 Cases and Rates by Neighborhood. 10-04-2020 to 10-17-2020.csv")
+spring <- read.csv("data/COVID-19 Cases and Rates by Neighborhood. 04-26-2020 to 05-09-2020.csv")
+fall <- read.csv("data/COVID-19 Cases and Rates by Neighborhood. 10-04-2020 to 10-17-2020.csv")
 
 #Clean Datasets
 
