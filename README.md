@@ -61,4 +61,13 @@ to work using public transportation. The model explains about 48% of the overall
 10. JHU COVID-19 Dashboard Infographic US v5.2. Accessed February 18, 2023. https://bao.arcgis.com/covid-19/jhu/county/25025.html
 11. Hazarie S, Soriano-Paños D, Arenas A, Gómez-Gardeñes J, Ghoshal G. Interplay between population density and mobility in determining the spread of epidemics in cities. Commun Phys. 2021;4(1):1-10. doi:10.1038/s42005-021-00679-0
 
+Table 1: Summary Statistics across Boston Neighborhoods
+Variable	Mean	Std. Dev.	Min	Pctl. 25	Median	Pctl. 75	Max
+Open Space	0.18	0.12	0.03	0.11	0.14	0.25	0.48
+65 years and older	0.13	0.06	0.00	0.09	0.13	0.15	0.37
+Population Density	8305.43	10938.92	0.00	3573.31	5656.67	8190.58	60736.00
+Hispanic/Latino	0.16	0.12	0.02	0.09	0.13	0.20	0.56
+Same house 1 year ago	0.78	0.11	0.51	0.69	0.80	0.87	0.93
+Public_transportation	0.23	0.10	0.07	0.17	0.23	0.31	0.46
+High School Education	0.16	0.10	0.01	0.07	0.14	0.26	0.38
 
