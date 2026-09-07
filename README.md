@@ -53,6 +53,8 @@ The proportion of people that commute to work using public transportation (p < .
 Population density (p < .05) was positively associated with COVID-19 incidence after controlling for the proportion of people who commute 
 to work using public transportation. The model explains about 48% of the overall data.  
 
+## Negative Bionomial
+
 # Discussion: 
 Our goal to assess which built environment factors that contribute to COVID-19 incidence in Boston. 
 Population density and public transportation address overcrowding in neighborhoods that increase transmission rate of infectious diseases. Another significant factor when we examine the relationship between population density and public transportation with COVID-19 incidence is human mobility.11 

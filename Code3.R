@@ -285,9 +285,32 @@ colnames(analysis)
 #Pop Density
 #Discussion: Since People were not working or jobs were not hiring or limited, this could explain the Poisson models with pop density as an indicator
 
-summary(p.count3 <- glm(formula = Spring_Case_Count ~ pop_density +
+summary(m1 <- glm(formula = Spring_Case_Count ~ pop_density +
 +hh_size + public_transit, family = poisson, data = analysis))
 
+#Spring Robust SE 
+
+cov.m1 <- vcovHC(m1, type = "HC0")
+std.err <- sqrt(diag(cov.m1))
+r.est <- cbind(Estimate= coef(m1), "Robust SE" = std.err,
+               "Pr(>|z|)" = 2 * pnorm(abs(coef(m1)/std.err), lower.tail = FALSE),
+               LL = coef(m1) - 1.96 * std.err,
+               UL = coef(m1) + 1.96 * std.err)
+
+r.est
+
+#OverDisperson
+library(performance)
+check_overdispersion(m1)
+#OverDispersion was detected
+
+#Negative bionomial model
+
+library(MASS)
+# M1 <- <- glm(formula = Spring_Case_Count ~ pop_density +hh_size + public_transit, family = poisson, data = analysis))
+
+
+#--------
 
 summary(p.count <- glm(formula = Spring_Case_Count ~ pop_density, family = poisson, data = analysis))
 
