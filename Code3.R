@@ -142,46 +142,48 @@ summary(com.fall <- lm(Fall_Rate ~ comm_cen_dens + high_school +
 broom::glance(com.fall)
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#+
 #+Re Analysis of OLS Models#
 
 library(MASS)
 a2 <- analysis[c(-4,-9), ] #Remove Mattpan and Dorchester from dataset, down from n = 15 to n = 13 observations
 
-summary(pd_a <- lm(Spring_Rate ~ pop_density + hh_size + high_school + 
+summary(pda <- lm(Spring_Rate ~ pop_density + hh_size + high_school + 
                      service_employed + Hispanic + public_transit, data=a2))
-summary(pd_f <- lm(Fall_Rate ~ pop_density + hh_size + high_school + 
+summary(pdf <- lm(Fall_Rate ~ pop_density + hh_size + high_school + 
                      service_employed + Hispanic + public_transit, data=a2))
 
+#Diagnostics from OLS Model
+
+opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
+plot(pd_a, las = 1)
+
+#Dorchester, Mattapan and Roxbury appear to have either high leverage or residual in the data. 
 
 ###VIF
 library(ppcor)
 library(olsrr)
 
-ols_vif_tol(pd_a)
+ols_vif_tol(pda)
+ols_vif_tol(pdf)
 #The indicator variable, population density(Tolerance = 0.26, VIF = 3.82) 
 #has 26% of variance completely independent from other variables
 #The covariate, the proportion of people who commute to work via public transit (Tolerance = 0.29, VIF ~ 3.43) has 
 #29% of the variance completely independent from the other variables
 #+Covariates HH Size, High_scool, service_employed, and Hispanic have low tolerance and VIF > 5
 #+(i.e.,  low variance independent from other variables)
-#Partial Correlations
-spcor(as.matrix(analysis))
 
-ols_vif_tol(pd_a)
 
-anova(pd_a, pd_b)
-
-#Is Hispanic a suppressor variable since it accounts for a lot of R-2 changed? 
 #When I drop it, the variance decreases significantly
 
-summary(pops_transit <- lm(Spring_Rate ~ pop_density + Hispanic + public_transit, data=a2)) 
+summary(pts <- lm(Spring_Rate ~ pop_density + Hispanic + public_transit, data=a2)) 
+summary(ptf <- lm(Fall_Rate ~ pop_density + Hispanic + public_transit, data=a2)) 
+
 #Trust this model above more, adj. R-adjusted value is 65.45% variance between each other
 
-ols_vif_tol(pops_transit)
+ols_vif_tol(pts)
+ols_vif_tol(ptf)
 
-
-#Part Correlations
+#Partial Correlations
 spcor(as.matrix(analysis))
 
 ##Hospital Density
@@ -191,14 +193,11 @@ summary(hos.spring <- lm(Spring_Rate ~ hos_density +  hh_size + high_school +
 ols_vif_tol(hos.spring)
 anova(hos.spring, hos.sp.2)
 
-summary(hos.sp.2 <- lm(Spring_Rate ~ hos_density +  hh_size + high_school + public_transit, data = a2)) 
 #Removed Hispanic due to low variance based on part correlation between Hispanic and Spring Rate (Spring COVID-19 incidence)
-
 summary(hos.sp.3 <- lm(Spring_Rate ~ hos_density + hh_size + public_transit, data = a2)) 
 #Put back in Hispanic, remove high school
-anova(hos.sp.2, hos.sp.3)
 
-ols_vif_tol(hos.sp.2)
+ols_vif_tol(hos.sp.3)
 
 #Partial Correlation for 'a2' Data set
 spcor(as.matrix(analysis))
@@ -209,13 +208,7 @@ correlation_matrix(a2,
                    show_significance = TRUE,
 )
 
-#Diagnostics from OLS Model
 
-opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
-plot(pd_a, las = 1)
-
-#Dorchester, Mattapan and Roxbury appear to have either high leverage or residual in the data. 
- 
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #
