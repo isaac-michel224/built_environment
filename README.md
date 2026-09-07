@@ -44,7 +44,7 @@ Given the small sample size, the quasi-Poisson approach was preferred as a parsi
 
 ## Summary Statistics
 
-In Boston, the population density per zip code is approximately 8,305 residents per square kilometer (SD: 10,938.92) (Table 1). About 23% (SD: 0.12) of residents per zip code commute to work using public transportation. 
+In Boston, the population density per zip code is approximately 8,305 residents per square kilometer (SD: 10,938.92). About 23% (SD: 0.12) of residents per zip code commute to work using public transportation. 
 
 ## Correlation
 
