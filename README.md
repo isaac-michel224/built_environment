@@ -1,12 +1,18 @@
 ## Background: 
 
-Built environment is described by as “all manufactured structures, including buildings, transportation systems and other physical surroundings constructed by humans”.1,2 This encompasses the roads, greenspaces, sidewalks, housing and overall land people use daily. Since we spend most of our time in the built environment2,3, it is important to recognize the risks associated with it.
-Previous research has shown how the built environment impacts our health. Greenspace promotes physical activity, which in has positive effects on combatting mental health and boosting immunity.4    
-Living in close proximity to recreational open space was associated with lower BMI.5 Areas categorized as rural areas were found to have worse health outcomes in chronic illnesses and self-rated health.6 
-The presence of highways were related to better health outcomes since they provide ease of access to travel to obtain resources.6 Characteristics of the built environment influence infectious disease outcomes as well, especially COVID-19. A previous study in New York found an association between percentage of sidewalks in a given area and COVID-19 incidence7. 
-Another study in Washington found that overcrowding correlated with increased incidence rates and increased open space was correlated with lowering COVID-19 incidence rates.8 
-COVID-19 has been shown the necessity of researchers and policymakers to pay attention to the built environment has a factor that either mitigate or exacerbate health outcomes. It allows for targeted public health interventions that are tailed to each community rather than general policies that may leave out certain vulnerable populations. In Boston, prior work has focused examining body mass index based on Boston’s built environment9, but not associating with infectious disease outcomes.  
-This study assesses how built environment measures impact COVID-19 outcomes in Boston. We want to assess differences in COVID-19 outcomes vary spatially and what structural issues around the built environment around the city that can affect COVID-19 outcomes.
+Built environment is described by as “all manufactured structures, including buildings, transportation systems and other physical surroundings constructed by humans”. 
+This encompasses the roads, green spaces, sidewalks, housing and overall land people use daily. 
+Since we spend most of our time in the built environment, it is important to recognize the risks associated with it.
+Previous research has shown how the built environment impacts our health. Green space promotes physical activity, which in has positive effects on combating mental health and boosting immunity.  
+Living in close proximity to recreational open space was associated with lower BMI. Areas categorized as rural areas were found to have worse health outcomes in chronic illnesses and self-rated health. 
+The presence of highways were related to better health outcomes since they provide ease of access to travel to obtain resources. Characteristics of the built environment influence infectious disease outcomes as well, especially COVID-19. 
+A previous study in New York found an association between percentage of sidewalks in a given area and COVID-19 incidence. 
+Another study in Washington found that overcrowding correlated with increased incidence rates and increased open space was correlated with lowering COVID-19 incidence rates. 
+COVID-19 has been shown the necessity of researchers and policymakers to pay attention to the built environment has a factor that either mitigate or exacerbate health outcomes. 
+It allows for targeted public health interventions that are tailed to each community rather than general policies that may leave out certain vulnerable populations. 
+In Boston, prior work has focused examining body mass index based on Boston’s built environment, but not associating with infectious disease outcomes.  
+This study assesses how built environment measures impact COVID-19 outcomes in Boston. 
+We want to assess differences in COVID-19 outcomes vary spatially and what structural issues around the built environment around the city that can affect COVID-19 outcomes.
 
 ## Methods: 
 
@@ -20,7 +26,8 @@ There are two main outcome variables were COVID-19 incidence rate (number of cas
 
 # Predictors
 
-Four exposure variables were examined in this study: The proportion of open space per zip code was calculated using square kilometers. There are main predictors, which include hospital density (number of hospitals per square kilometer), population density (number of people per square kilometer) and community center density (community centers per square kilometer).    
+Four exposure variables were examined in this study: The proportion of open space per zip code was calculated using square kilometers. 
+There are main predictors, which include hospital density (number of hospitals per square kilometer), population density (number of people per square kilometer) and community center density (community centers per square kilometer).    
 
 # Covariates
 
@@ -47,7 +54,7 @@ The proportion of people that commute to work using public transportation (p < .
 Population density (p < .05) was positively associated with COVID-19 incidence after controlling for the proportion of people who commute 
 to work using public transportation. The model explains about 48% of the overall data.  
 
-## References
+## References:
 
 1.	Martin LJ, Adams RI, Bateman A, et al. Evolution of the indoor biome. Trends Ecol Evol. 2015;30(4):223-232. doi:10.1016/j.tree.2015.02.001
 2.	Gilbert JA, Stephens B. Microbiology of the built environment. Nat Rev Microbiol. 2018;16(11):661-670. doi:10.1038/s41579-018-0065-5
@@ -61,13 +68,14 @@ to work using public transportation. The model explains about 48% of the overall
 10. JHU COVID-19 Dashboard Infographic US v5.2. Accessed February 18, 2023. https://bao.arcgis.com/covid-19/jhu/county/25025.html
 11. Hazarie S, Soriano-Paños D, Arenas A, Gómez-Gardeñes J, Ghoshal G. Interplay between population density and mobility in determining the spread of epidemics in cities. Commun Phys. 2021;4(1):1-10. doi:10.1038/s42005-021-00679-0
 
-Table 1: Summary Statistics across Boston Neighborhoods
-Variable	Mean	Std. Dev.	Min	Pctl. 25	Median	Pctl. 75	Max
-Open Space	0.18	0.12	0.03	0.11	0.14	0.25	0.48
-65 years and older	0.13	0.06	0.00	0.09	0.13	0.15	0.37
-Population Density	8305.43	10938.92	0.00	3573.31	5656.67	8190.58	60736.00
-Hispanic/Latino	0.16	0.12	0.02	0.09	0.13	0.20	0.56
-Same house 1 year ago	0.78	0.11	0.51	0.69	0.80	0.87	0.93
-Public_transportation	0.23	0.10	0.07	0.17	0.23	0.31	0.46
-High School Education	0.16	0.10	0.01	0.07	0.14	0.26	0.38
+## Discussion: 
+Our goal to assess which built environment factors that contribute to COVID-19 incidence in Boston. 
+Population density and public transportation address overcrowding in neighborhoods that increase transmission rate of infectious diseases. Another significant factor when we examine the relationship between population density and public transportation with COVID-19 incidence is human mobility.11 
+The proportion of people commuting to work via public transportation was a stronger variable than population density even though it was not one of our initial predictor variables. We must consider the role in which public transit plays in facilitating high density, close cornered environments. This can make for increased transmission rates of COVID-19 and other infectious disease.
+In Boston, an example of intersection between those three variables is Massachusetts Public Transportation Authority (MBTA). 
+Planning around public transit for effective infectious disease control.Investigate the ways in which buses, subways, trolleys, and trains can each affect infection and/or transmission rate.  
+A metropolitan city like Boston must consider amount of people residing in each zip code to mitigate infectious disease transmission. 
+Tailoring effective COVID-19 prevention and treatment measures to respective zip code environmental characteristics may reduce overall morbidity and mortality in the Boston area.   
+In future studies, we must explore spatial analysis that allow us to weigh in the geography of Boston with both the built environmental factors and the sociodemographic data per neighborhood. 
+
 

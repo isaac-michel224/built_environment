@@ -277,16 +277,16 @@ plot(pd_a, las = 1)
 #---Poisson Regression--#
 #Documentation: https://stats.oarc.ucla.edu/r/dae/poisson-regression/
 #This analysis will be using both Spring and Fall Case Counts
-#library(ggplot2)
-#library(sandwich)
-#library(msm)
+library(ggplot2)
+library(sandwich)
+library(msm)
 
-#colnames(analysis)
+colnames(analysis)
 
-#Pop Density
+P#op Density
 #Discussion: Since People were not working or jobs were not hiring or limited, this could explain the Poisson models with pop density as an indicator
 
-#+summary(p.count3 <- glm(formula = Spring_Case_Count ~ pop_density + 
+#+summary(p.count3 <- glm(formula = Spring_Case_Count ~ pop_density +
 #+hh_size + public_transit, family = poisson, data = analysis))
 
 
