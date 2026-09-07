@@ -83,11 +83,6 @@ matrix <- data %>%
          "high_school", "service_employed", "open_space",
          "pop_density", "hos_density", "comm_cen_dens")
 
-#library(corrplot) #Create a visualization of correlation matrix 
-#M <- cor(analysis)
-#head(round(M,2))
-#corrplot(M, method="number")
-#corrplot(M, method="circle")
 
 library(corrtable) #Documentation: https://paulvanderlaken.com/2020/07/28/publication-ready-correlation-matrix-significance-r/#save_correlation_matrix
 save_correlation_matrix(analysis[,c(-2,-4)],
@@ -121,8 +116,10 @@ summary(pd_f <- lm(Fall_Rate ~ pop_density + hh_size + high_school + service_emp
 
 cor.test(analysis$hh_size, analysis$pop_density)
 
-summary(os.spring <- lm(Spring_Rate ~ open_space + hh_size + high_school + service_employed + Hispanic + public_transit, data=analysis))  
-summary(os.fall <- lm(Fall_Rate ~ open_space +  hh_size + high_school + service_employed + Hispanic + public_transit, data = analysis)) 
+summary(os.spring <- lm(Spring_Rate ~ open_space + hh_size + high_school + 
+                          service_employed + Hispanic + public_transit, data=analysis))  
+summary(os.fall <- lm(Fall_Rate ~ open_space +  hh_size + high_school + 
+                        service_employed + Hispanic + public_transit, data = analysis)) 
 
 summary(os.spring <- lm(Spring_Rate ~ open_space + hh_size, data=analysis)) #Significant, 
 
@@ -137,10 +134,12 @@ summary(hos.spring <- lm(Spring_Rate ~ hos_density + service_employed, data=anal
 summary(hos.fall <- lm(Fall_Rate ~ hos_density + hh_size, data=analysis))
 
 #Predictor 4: Community Center Density
-summary(com.spring <- lm(Spring_Rate ~ comm_cen_dens + high_school, data=analysis)) #Significant Model 
-#broom::glance(hos.spring)
-summary(com.fall <- lm(Fall_Rate ~ comm_cen_dens + high_school + public_transit, data=analysis)) #Same AIC when I with and without public transit 
-#broom::glance(com.fall)
+summary(com.spring <- lm(Spring_Rate ~ comm_cen_dens +
+                           high_school, data=analysis)) #Significant Model 
+broom::glance(hos.spring)
+summary(com.fall <- lm(Fall_Rate ~ comm_cen_dens + high_school + 
+                         public_transit, data=analysis)) #Same AIC when I with and without public transit 
+broom::glance(com.fall)
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #+
@@ -152,8 +151,10 @@ summary(com.fall <- lm(Fall_Rate ~ comm_cen_dens + high_school + public_transit,
 library(MASS)
 a2 <- analysis[c(-4,-9), ] #Remove Mattpan and Dorchester from dataset, down from n = 15 to n = 13 observations
 
-summary(pd_a <- lm(Spring_Rate ~ pop_density + hh_size + high_school + service_employed + Hispanic + public_transit, data=a2))
-summary(pd_f <- lm(Fall_Rate ~ pop_density + hh_size + high_school + service_employed + Hispanic + public_transit, data=a2))
+summary(pd_a <- lm(Spring_Rate ~ pop_density + hh_size + high_school + 
+                     service_employed + Hispanic + public_transit, data=a2))
+summary(pd_f <- lm(Fall_Rate ~ pop_density + hh_size + high_school + 
+                     service_employed + Hispanic + public_transit, data=a2))
 
 
 ###VIF
@@ -161,65 +162,46 @@ library(ppcor)
 library(olsrr)
 
 ols_vif_tol(pd_a)
-#++The indicator variable, population density(Tolerance = 0.26, VIF = 3.82) 
-#+has 26% of variance completely independent from other variables
-#+
-#+++The covariate, the proportion of people who commute to work via public transit (Tolerance = 0.29, VIF ~ 3.43) has 
-#+29% of the variance completely independent from the other variables
+#The indicator variable, population density(Tolerance = 0.26, VIF = 3.82) 
+#has 26% of variance completely independent from other variables
+#The covariate, the proportion of people who commute to work via public transit (Tolerance = 0.29, VIF ~ 3.43) has 
+#29% of the variance completely independent from the other variables
 #+Covariates HH Size, High_scool, service_employed, and Hispanic have low tolerance and VIF > 5
-#+(i.e.,  low variance independent from other variables )
-#+
+#+(i.e.,  low variance independent from other variables)
 #Partial Correlations
 spcor(as.matrix(analysis))
 
-summary(pd_a <- lm(Spring_Rate ~ pop_density + hh_size + high_school + Hispanic + service_employed + public_transit, data=a2))
-summary(pd_b <- lm(Spring_Rate ~ pop_density + hh_size + high_school + service_employed + public_transit, data=a2)) 
-# Strongest Model - pop_density: Regression Coefficient(0.03, p = 0.0481), Adjusted R-squared: 0.6631
-
-
-#ols_vif_tol(pd_d)
+ols_vif_tol(pd_a)
 
 anova(pd_a, pd_b)
 
-#Model pd_b, which removed Hispanic, is a stronger fit for the data than pd_a model
-#summary(rr.pops <- rlm(Spring_Rate ~ pop_density + hh_size + high_school + service_employed + public_transit, data =a2))
-
-#Is Hispanic a suppressor variable since it accounts for a lot of R-2 changed? When I drop it, the variance decreases significantly
+#Is Hispanic a suppressor variable since it accounts for a lot of R-2 changed? 
+#When I drop it, the variance decreases significantly
 
 summary(pops_transit <- lm(Spring_Rate ~ pop_density + Hispanic + public_transit, data=a2)) 
 #Trust this model above more, adj. R-adjusted value is 65.45% variance between each other
-#summary(pops_public <- lm(Spring_Rate ~ pop_density + public_transit, data=a2))
 
-#anova(pops_transit, pops_public)
-#ols_vif_tol(pop_transit)
-#ols_vif_tol(pops_public)
+ols_vif_tol(pops_transit)
 
-#Fall Rate
-ols_vif_tol(pd_f)
-
-###Open Space
-summary(os.1 <- lm(Spring_Rate ~ open_space + hh_size + high_school + service_employed + Hispanic + public_transit, data=a2))  
-summary(os.2 <- lm(Fall_Rate ~ open_space +  hh_size + high_school + service_employed + Hispanic + public_transit, data = a2)) 
-
-ols_vif_tol(os.1)
 
 #Part Correlations
 spcor(as.matrix(analysis))
 
 ##Hospital Density
-summary(hos.spring <- lm(Spring_Rate ~ hos_density +  hh_size + high_school + service_employed + Hispanic + public_transit, data = a2))
+summary(hos.spring <- lm(Spring_Rate ~ hos_density +  hh_size + high_school + 
+                           service_employed + Hispanic + public_transit, data = a2))
 
 ols_vif_tol(hos.spring)
 anova(hos.spring, hos.sp.2)
 
-summary(hos.sp.2 <- lm(Spring_Rate ~ hos_density +  hh_size + high_school + service_employed + public_transit, data = a2)) 
+summary(hos.sp.2 <- lm(Spring_Rate ~ hos_density +  hh_size + high_school + public_transit, data = a2)) 
 #Removed Hispanic due to low variance based on part correlation between Hispanic and Spring Rate (Spring COVID-19 incidence)
 
-summary(hos.sp.3 <- lm(Spring_Rate ~ hos_density + hh_size + Hispanic + service_employed + public_transit, data = a2)) 
+summary(hos.sp.3 <- lm(Spring_Rate ~ hos_density + hh_size + public_transit, data = a2)) 
 #Put back in Hispanic, remove high school
 anova(hos.sp.2, hos.sp.3)
 
-ols_vif_tol(hos.sp.3)
+ols_vif_tol(hos.sp.2)
 
 spcor(as.matrix(analysis))
 
@@ -243,10 +225,7 @@ plot(pd_a, las = 1)
 #a[d1 > 4/15, ]
 
 #For pdx model, Dorchester, Mattapan and Roxbury appear to have either high leverage or residual in the data. 
-#For the Fall 
-
-#summary(rr.pdx <- rlm(Fall_Rate ~ pop_density + hh_size + high_school + service_employed + Hispanic + public_transit, data=analysis))
-
+ 
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #
