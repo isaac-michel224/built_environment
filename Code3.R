@@ -283,18 +283,18 @@ library(msm)
 
 colnames(analysis)
 
-P#op Density
+#Pop Density
 #Discussion: Since People were not working or jobs were not hiring or limited, this could explain the Poisson models with pop density as an indicator
 
-#+summary(p.count3 <- glm(formula = Spring_Case_Count ~ pop_density +
-#+hh_size + public_transit, family = poisson, data = analysis))
+summary(p.count3 <- glm(formula = Spring_Case_Count ~ pop_density +
++hh_size + public_transit, family = poisson, data = analysis))
 
 
-#summary(p.count <- glm(formula = Spring_Case_Count ~ pop_density, family = poisson, data = analysis))
+summary(p.count <- glm(formula = Spring_Case_Count ~ pop_density, family = poisson, data = analysis))
 
 
-#+summary(P_s_count <- glm(formula = Spring_Case_Count ~ pop_density +
-#+ hh_size + high_school + Hispanic + public_transit, family = poisson, data = analysis))
+# +summary(P_s_count <- glm(formula = Spring_Case_Count ~ pop_density +
+# hh_size + high_school + Hispanic + public_transit, family = poisson, data = analysis))
 
 #library(AER)
 #dispersiontest(p.count3)
@@ -307,16 +307,16 @@ P#op Density
 
 #summary(p1)
 
-#summary(p.fall.count <- glm(formula = Fall_Case_Count ~ pop_density
-  #                          + hh_size + public_transit, family = quasipoisson, data = analysis))
+summary(p.fall.count <- glm(formula = Fall_Case_Count ~ pop_density
+                            + hh_size + public_transit, family = quasipoisson, data = analysis))
 
 
 #Open Space
-#summary(open.spr.count <- glm(formula = Spring_Case_Count ~ open_space + 
-   #                        hh_size, family = quasipoisson, data = analysis))
+summary(open.spr.count <- glm(formula = Spring_Case_Count ~ open_space + 
+                           hh_size, family = quasipoisson, data = analysis))
 
-#summary(open.fall.count <- glm(formula = Fall_Case_Count ~ open_space + 
-    #                             hh_size, family = quasipoisson, data = analysis))
+summary(open.fall.count <- glm(formula = Fall_Case_Count ~ open_space + 
+                                 hh_size, family = quasipoisson, data = analysis))
 
 
 #Standard Errors
