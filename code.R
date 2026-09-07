@@ -21,7 +21,7 @@ str(out_pre)
 view(out_pre)
 
 #Bring in Age Dataset
-age_data <- read_excel("C:/Users/michelia/Documents/Boston_Built_Environment/Zip_Code_Sociodems_Boston/Age_Boston_ZC/acs2021_5yr_B01001_86000US02127/acs2021_5yr_B01001_86000US02127.xlsx")
+age_data <- read_excel("data/acs2021_5yr_B01001_86000US02127.xlsx")
 
 colnames(age_data)
 
@@ -48,12 +48,12 @@ adt <- adt[-1, ]
 adt <- setDT(adt, keep.rownames = TRUE)[]
 view(adt)
 
-#write.csv(adt, "C:/Users/michelia/Documents/Boston_Built_Environment/oold_man.csv", row.names=TRUE)
+#write.csv(adt, "data/oold_man.csv", row.names=TRUE)
 #Make Row Headers into Zip Code Column
 
 #Do the Same Process with the Education Dataset 
 
-edu_data <- read_excel("C:/Users/michelia/Documents/Boston_Built_Environment/Zip_Code_Sociodems_Boston/Education_Attainment_Boston_ZC/acs2021_5yr_B15002_86000US02127/acs2021_5yr_B15002_86000US02127.xlsx")
+edu_data <- read_excel("data/acs2021_5yr_B15002_86000US02127.xlsx")
 
 edt <- transpose(edu_data)
 rownames(edt) <- colnames(edu_data)
@@ -76,7 +76,7 @@ view(edt)
 
 #Geographical Mobility
 
-mob_data <- read_excel("C:/Users/michelia/Documents/Boston_Built_Environment/Zip_Code_Sociodems_Boston/Geo_Mobility_Past_Year_Boston_ZC/acs2021_5yr_B07003_86000US02127/acs2021_5yr_B07003_86000US02127.xlsx")
+mob_data <- read_excel("data/acs2021_5yr_B07003_86000US02127.xlsx")
 mdt <- transpose(mob_data)
 rownames(mdt) <- colnames(mob_data)
 colnames(mdt) <- rownames(mob_data)
@@ -96,7 +96,7 @@ mdt <- setDT(mdt, keep.rownames = TRUE)[]
 view(mdt)
 #Do the Same Process with the Hispanic
 
-his_data <- read_excel("C:/Users/michelia/Documents/Boston_Built_Environment/Zip_Code_Sociodems_Boston/Hisp_Race_Boston_ZC/acs2021_5yr_B03002_86000US02127/Hispanic or Latino Origin by Race.xlsx")
+his_data <- read_excel("data/Hispanic or Latino Origin by Race.xlsx")
 
 hdt <- transpose(his_data)
 rownames(hdt) <- colnames(his_data)
@@ -119,7 +119,7 @@ view(hdt)
 
 #Wranging the Means of Transportation Dataset
 
-trans_data <- read_excel("C:/Users/michelia/Documents/Boston_Built_Environment/Zip_Code_Sociodems_Boston/Means_of_Transport_Boston_ZC/acs2021_5yr_B08006_86000US02127/acs2021_5yr_B08006_86000US02127.xlsx")
+trans_data <- read_excel("data/acs2021_5yr_B08006_86000US02127.xlsx")
 
 trdt <- transpose(trans_data)
 rownames(trdt) <- colnames(trans_data)
@@ -141,7 +141,7 @@ view(trdt)
 
 #Population Data
 
-pop_data <- read_excel("C:/Users/michelia/Documents/Boston_Built_Environment/Zip_Code_Sociodems_Boston/Population_Boston_ZC/acs2021_5yr_B01003_86000US02127/acs2021_5yr_B01003_86000US02127.xlsx")
+pop_data <- read_excel("data/acs2021_5yr_B01003_86000US02127.xlsx")
 
 pdt <- transpose(pop_data)
 rownames(pdt) <- colnames(pop_data)
@@ -185,4 +185,4 @@ str(data) #Everthing except for the zip_code column is numeric
 
 library(writexl)
 
-write_xlsx(data, "C:/Users/michelia/Documents/Boston_Built_Environment/data.xlsx")
+write_xlsx(data, "data/dataset.xlsx")

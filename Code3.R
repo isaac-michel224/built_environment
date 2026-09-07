@@ -48,7 +48,7 @@ covid[covid == "Backbay"] <- "Back Bay"
 
 #Write excel Data output
 library(readxl)
-neigh_cov <- read_excel("C:/Users/michelia/Documents/Boston_Built_Environment/neigh_cov.xlsx")
+neigh_cov <- read_excel("data/neigh_cov.xlsx")
 
 data <- merge(covid, neigh_cov,
               by.x = "Category1",
@@ -353,9 +353,5 @@ plot(pd_a, las = 1)
 #summary(o.count <- glm(formula = Spring_Case_Count ~ open_space + 
 #                 hh_size + high_school + service_employed + Hispanic 
 #                 + public_transit, family = quasipoisson, data = analysis))
-
-#++++
-#+
-#
 
 
