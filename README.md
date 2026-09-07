@@ -38,7 +38,6 @@ COVID-19 Incidence was cross walked from the county level to zip code level. Cor
 
 Ordinary least squares (OLS) regression was used to assess the global relationships between built environment variables and COVID-19 incidence. Poisson regression models analyzed the case count data. 
 
-Overdispersion was detected in the Poisson model, so a quasi-Poisson model was used to account for extra-Poisson variation. 
 Given the small sample size, the quasi-Poisson approach was preferred as a parsimonious alternative to more parameter-intensive count models.
 
 # Findings: 
@@ -49,7 +48,7 @@ In Boston, the population density per zip code is approximately 8,305 residents 
 
 ## Correlation
 
-The proportion of people that commute to work using public transportation (p < .001) was positively associated with COVID-19 incidence (Table 2).
+The proportion of people that commute to work using public transportation (p < .001) was positively associated with COVID-19 incidence.
 
 ## Ordinary Least Squares
 
