@@ -157,7 +157,6 @@ summary(pd_a <- lm(Spring_Rate ~ pop_density + hh_size + high_school + service_e
 summary(pd_f <- lm(Fall_Rate ~ pop_density + hh_size + high_school + service_employed + Hispanic + public_transit, data=a2))
 
 
-
 ###VIF
 library(ppcor)
 library(olsrr)
@@ -291,6 +290,9 @@ summary(p.count3 <- glm(formula = Spring_Case_Count ~ pop_density +
 
 
 summary(p.count <- glm(formula = Spring_Case_Count ~ pop_density, family = poisson, data = analysis))
+
+summary(f.count <- glm(formula = Fall_Case_Count ~ pop_density +
+                          +hh_size + public_transit, family = poisson, data = analysis))
 
 
 # +summary(P_s_count <- glm(formula = Spring_Case_Count ~ pop_density +

@@ -1,4 +1,4 @@
-## Background: 
+# Background: 
 
 Built environment is described by as “all manufactured structures, including buildings, transportation systems and other physical surroundings constructed by humans”. 
 This encompasses the roads, green spaces, sidewalks, housing and overall land people use daily. 
@@ -14,47 +14,58 @@ In Boston, prior work has focused examining body mass index based on Boston’s 
 This study assesses how built environment measures impact COVID-19 outcomes in Boston. 
 We want to assess differences in COVID-19 outcomes vary spatially and what structural issues around the built environment around the city that can affect COVID-19 outcomes.
 
-## Methods: 
+# Methods: 
 
-# Data
+## Data
 
 COVID-19 data was extracted from the Boston Public Health Commission’s COVID-19 Dashboard. Demographic Data was extracted at the neighborhood level from the 5-year American Community Survey 5-year (2015-2019). 
 
-# Outcome
+## Outcome
 
 There are two main outcome variables were COVID-19 incidence rate (number of cases per 100,000 residents) and COVID-19 case count. We examined the COVID-19 incidence rates during the spring and the fall of 2020 during the following two-week periods: April 26th, 2020 – May 9th, 2020 and October 4th, 2020 – October 17th, 2020. 
 
-# Predictors
+## Predictors
 
 Four exposure variables were examined in this study: The proportion of open space per zip code was calculated using square kilometers. 
 There are main predictors, which include hospital density (number of hospitals per square kilometer), population density (number of people per square kilometer) and community center density (community centers per square kilometer).    
 
-# Covariates
+## Covariates
 
 Covariates included the percentage of people: who were 65 years and older, who were Hispanic, walk to commute, who had a high school education, and who had geographical mobility within the past year. 
 
-# Analysis
+## Analysis
 
 COVID-19 Incidence was cross walked from the county level to zip code level. Correlation tests were performed between the outcome variable, predictors, and the covariates at the zip code level. 
 
 Ordinary least squares (OLS) regression was used to assess the global relationships between built environment variables and COVID-19 incidence. Poisson regression models analyzed the case count data. 
 
-## Findings: 
+# Findings: 
 
-# Summary Statistics
+## Summary Statistics
 
 In Boston, the population density per zip code is approximately 8,305 residents per square kilometer (SD: 10,938.92) (Table 1). About 23% (SD: 0.12) of residents per zip code commute to work using public transportation. 
 
-# Correlation
+## Correlation
 
 The proportion of people that commute to work using public transportation (p < .001) was positively associated with COVID-19 incidence (Table 2).
 
-# Ordinary Least Squares
+## Ordinary Least Squares
 
 Population density (p < .05) was positively associated with COVID-19 incidence after controlling for the proportion of people who commute 
 to work using public transportation. The model explains about 48% of the overall data.  
 
-## References:
+# Discussion: 
+Our goal to assess which built environment factors that contribute to COVID-19 incidence in Boston. 
+Population density and public transportation address overcrowding in neighborhoods that increase transmission rate of infectious diseases. Another significant factor when we examine the relationship between population density and public transportation with COVID-19 incidence is human mobility.11 
+The proportion of people commuting to work via public transportation was a stronger variable than population density even though it was not one of our initial predictor variables. We must consider the role in which public transit plays in facilitating high density, close cornered environments. This can make for increased transmission rates of COVID-19 and other infectious disease.
+In Boston, an example of intersection between those three variables is Massachusetts Public Transportation Authority (MBTA). 
+Planning around public transit for effective infectious disease control.Investigate the ways in which buses, subways, trolleys, and trains can each affect infection and/or transmission rate.  
+A metropolitan city like Boston must consider amount of people residing in each zip code to mitigate infectious disease transmission. 
+Tailoring effective COVID-19 prevention and treatment measures to respective zip code environmental characteristics may reduce overall morbidity and mortality in the Boston area.   
+In future studies, we must explore spatial analysis that allow us to weigh in the geography of Boston with both the built environmental factors and the sociodemographic data per neighborhood. 
+
+
+# References:
 
 1.	Martin LJ, Adams RI, Bateman A, et al. Evolution of the indoor biome. Trends Ecol Evol. 2015;30(4):223-232. doi:10.1016/j.tree.2015.02.001
 2.	Gilbert JA, Stephens B. Microbiology of the built environment. Nat Rev Microbiol. 2018;16(11):661-670. doi:10.1038/s41579-018-0065-5
@@ -67,15 +78,4 @@ to work using public transportation. The model explains about 48% of the overall
 9.	Duncan DT, Castro MC, Gortmaker SL, Aldstadt J, Melly SJ, Bennett GG. Racial differences in the built environment—body mass index relationship? A geospatial analysis of adolescents in urban neighborhoods. Int J Health Geogr. 2012;11(1):11. doi:10.1186/1476-072X-11-11
 10. JHU COVID-19 Dashboard Infographic US v5.2. Accessed February 18, 2023. https://bao.arcgis.com/covid-19/jhu/county/25025.html
 11. Hazarie S, Soriano-Paños D, Arenas A, Gómez-Gardeñes J, Ghoshal G. Interplay between population density and mobility in determining the spread of epidemics in cities. Commun Phys. 2021;4(1):1-10. doi:10.1038/s42005-021-00679-0
-
-## Discussion: 
-Our goal to assess which built environment factors that contribute to COVID-19 incidence in Boston. 
-Population density and public transportation address overcrowding in neighborhoods that increase transmission rate of infectious diseases. Another significant factor when we examine the relationship between population density and public transportation with COVID-19 incidence is human mobility.11 
-The proportion of people commuting to work via public transportation was a stronger variable than population density even though it was not one of our initial predictor variables. We must consider the role in which public transit plays in facilitating high density, close cornered environments. This can make for increased transmission rates of COVID-19 and other infectious disease.
-In Boston, an example of intersection between those three variables is Massachusetts Public Transportation Authority (MBTA). 
-Planning around public transit for effective infectious disease control.Investigate the ways in which buses, subways, trolleys, and trains can each affect infection and/or transmission rate.  
-A metropolitan city like Boston must consider amount of people residing in each zip code to mitigate infectious disease transmission. 
-Tailoring effective COVID-19 prevention and treatment measures to respective zip code environmental characteristics may reduce overall morbidity and mortality in the Boston area.   
-In future studies, we must explore spatial analysis that allow us to weigh in the geography of Boston with both the built environmental factors and the sociodemographic data per neighborhood. 
-
 
