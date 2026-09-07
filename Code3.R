@@ -178,7 +178,7 @@ summary(pd_b <- lm(Spring_Rate ~ pop_density + hh_size + high_school + service_e
 # Strongest Model - pop_density: Regression Coefficient(0.03, p = 0.0481), Adjusted R-squared: 0.6631
 
 
-ols_vif_tol(pd_d)
+#ols_vif_tol(pd_d)
 
 anova(pd_a, pd_b)
 
@@ -307,76 +307,54 @@ check_overdispersion(m1)
 #Negative bionomial model
 
 library(MASS)
-# M1 <- <- glm(formula = Spring_Case_Count ~ pop_density +hh_size + public_transit, family = poisson, data = analysis))
+m2 <- glm.nb(formula = Spring_Case_Count ~ pop_density + 
+               hh_size + public_transit, data = analysis)
 
+summary(m2)
+
+#Checking Model Assumption
+pchisq(2 * (logLik(m2) - logLik(m1)), df = 1, lower.tail = FALSE)
+
+
+
+
+
+#QuasiPoisson model may be better since the dataset has a small sample size
+m3 <- glm(Spring_Case_Count ~ pop_density + 
+            hh_size + public_transit, family = quasipoisson, data = analysis)
+
+summary(m3)
+
+#Correlation Tests
+
+cor_matrix <- cor(analysis, use = "complete.obs")
+print(cor_matrix)
+
+library(car)
+
+vif(m3)
+
+colnames(analysis)
 
 #--------
-
-summary(p.count <- glm(formula = Spring_Case_Count ~ pop_density, family = poisson, data = analysis))
-
-summary(f.count <- glm(formula = Fall_Case_Count ~ pop_density +
-                          +hh_size + public_transit, family = poisson, data = analysis))
-
-
-# +summary(P_s_count <- glm(formula = Spring_Case_Count ~ pop_density +
-# hh_size + high_school + Hispanic + public_transit, family = poisson, data = analysis))
-
-#library(AER)
-#dispersiontest(p.count3)
-#https://stats.stackexchange.com/questions/66586/is-there-a-test-to-determine-whether-glm-overdispersion-is-significant
-
-
-#exp(coef(P_s_count))
-#summary(pop.spr.count <- glm(formula = Spring_Case_Count ~ pop_density + 
- #                          hh_size + public_transit, family = quasipoisson, data = analysis))
-
-#summary(p1)
 
 summary(p.fall.count <- glm(formula = Fall_Case_Count ~ pop_density
                             + hh_size + public_transit, family = quasipoisson, data = analysis))
 
 
+
 #Open Space
-summary(open.spr.count <- glm(formula = Spring_Case_Count ~ open_space + 
-                           hh_size, family = quasipoisson, data = analysis))
+summary(open.spr.count <- glm(formula = Spring_Case_Count ~ open_space + pop_density + 
+                                public_transit + hh_size, family = quasipoisson, data = analysis))
 
-summary(open.fall.count <- glm(formula = Fall_Case_Count ~ open_space + 
-                                 hh_size, family = quasipoisson, data = analysis))
+vif(open.spr.count)
 
+summary(open.fall.count <- glm(formula = Fall_Case_Count ~ open_space + pop_density + 
+                                 public_transit + hh_size, family = quasipoisson, data = analysis))
 
-#Standard Errors
+vif(open.fall.count)
 
+#Model Diagnostic
 
-#cov.m1 <- vcovHC(pop.spr.count, type="HC0")
-#std.err <- sqrt(diag(cov.m1))
-#r.est <- cbind(Estimate= coef(pop.spr.count), "Robust SE" = std.err,
-#               "Pr(>|z|)" = 2 * pnorm(abs(coef(pop.spr.count)/std.err), 
- #                                     lower.tail = FALSE),
-  #             LL = coef(pop.spr.count) - 1.96 * std.err,
-   #            UL = coef(pop.spr.count) + 1.96 * std.err)
-
-#r.est
-
-#exp(coef(pop.spr.count))
-
-
-#Incidence Rate Ratios
-
-#++s <- deltamethod(list( ~ exp(x1), ~ exp(x2), ~ exp(x3), ~ exp(x4)),    
-#+       coef(pop.spr.count), cov.m1)
-
-#rexp.est <- exp(r.est[, -3])
-
-#rexp.est[, "Robust SE"] <- s
-
-#rexp.est
-
-#s_count <- glm(formula = Spring_Case_Count ~ pop_density + hh_size + high_school + service_employed, family = quasipoisson, data = analysis)
-#summary(s_count)
-
-
-#summary(o.count <- glm(formula = Spring_Case_Count ~ open_space + 
-#                 hh_size + high_school + service_employed + Hispanic 
-#                 + public_transit, family = quasipoisson, data = analysis))
-
-
+dfbetaPlots(open.spr.count)
+dfbetaPlots(open.fall.count)
