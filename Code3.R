@@ -3,16 +3,9 @@ rm(list = ls()) # Clear environment
 gc()            # Clear unused memory
 cat("\f")       # Clear the console
 
-
 library.list <- c("ppcor","Hmisc","ggplot2","knitr",
                   "data.table","tidyverse","olsrr",
                   "car","sandwich","msm", "msm") # this is a list of libraries we will be using
-# foreign is a package that allows us to read spss data in r
-# The rcorr( ) function in the Hmisc package produces correlations/covariances and significance levels for pearson  correlations.
-# ppcor provides functions that Calculate parital and semi-partial (part) correlations along with p value.
-# ggplot2 is a package that allows us to creat elegant data visualisations using the grammar of graphics.
-# tidyverse will make it easy to install and load multiple "tidyverse" packages in a single step.
-# knitr is a general-purpose package for dynamic report generation in R.
 
 for (i in 1:length(library.list)) {
   if (!library.list[i] %in% rownames(installed.packages())) {
@@ -21,7 +14,6 @@ for (i in 1:length(library.list)) {
   library(library.list[i], character.only = TRUE)
 }
 rm(library.list)
-
 
 spring <- read.csv("data/COVID-19 Cases and Rates by Neighborhood. 04-26-2020 to 05-09-2020.csv")
 fall <- read.csv("data/COVID-19 Cases and Rates by Neighborhood. 10-04-2020 to 10-17-2020.csv")
@@ -42,7 +34,6 @@ outcome_2 <- fall %>%
 outcome_2 <- outcome_2[c(-6,-9,-10), ]
 
 #Merge 2 variables
-
 covid <- merge(outcome_1, outcome_2,
             by = "Category1")
 
@@ -69,10 +60,7 @@ summ <- datx %>%
 st(summ, add.median = TRUE)
 
 
-
 #----Correlation---#
-#https://www.geeksforgeeks.org/correlation-matrix-in-r-programming/
-
 analysis <- datx %>%
   select("Spring_Rate", "Spring_Case_Count", "Fall_Rate", 
          "Fall_Case_Count", "public_transit", "Hispanic", "hh_size",
@@ -86,7 +74,7 @@ matrix <- data %>%
          "pop_density", "hos_density", "comm_cen_dens")
 
 
-library(corrtable) #Documentation: https://paulvanderlaken.com/2020/07/28/publication-ready-correlation-matrix-significance-r/#save_correlation_matrix
+library(corrtable) 
 save_correlation_matrix(analysis[,c(-2,-4)],
                    filename = 'be_boston_matrix.csv',
                    type = "pearson", 
@@ -105,17 +93,10 @@ correlation_matrix(data,
 #This analysis will be using both Spring and Fall Rates
 
 #Predictor 1: Population Density
-#summary(pdx <- lm(Spring_Rate ~ pop_density + hh_size + high_school + service_employed, data=analysis)) #Significance
-#confint(pdx)
-#summary(pdz <- lm(Fall_Rate ~ pop_density + hh_size + high_school + service_employed, data=analysis))#Significance Model, p < .05
-
-
 summary(pd_a <- lm(Spring_Rate ~ pop_density + hh_size + high_school + service_employed + Hispanic + public_transit, data=analysis))
 summary(pd_f <- lm(Fall_Rate ~ pop_density + hh_size + high_school + service_employed + Hispanic + public_transit, data=analysis))
 
 #Predictor 2: Open Space
-
-
 cor.test(analysis$hh_size, analysis$pop_density)
 
 summary(os.spring <- lm(Spring_Rate ~ open_space + hh_size + high_school + 
@@ -125,13 +106,14 @@ summary(os.fall <- lm(Fall_Rate ~ open_space +  hh_size + high_school +
 
 summary(os.spring <- lm(Spring_Rate ~ open_space + hh_size, data=analysis)) #Significant, 
 
-#hh_size remains significant from Spring to Fall
+#Note: The variable for Household Size remains significant from Spring to Fall
 
+#Confidence Intervals
 confint(os.spring)
 confint(os.fall)
+
 #Predictor 3: Hospital Density
 summary(hos.spring <- lm(Spring_Rate ~ hos_density + service_employed, data=analysis)) 
-#broom::glance(hos.spring)
 
 summary(hos.fall <- lm(Fall_Rate ~ hos_density + hh_size, data=analysis))
 
@@ -139,15 +121,14 @@ summary(hos.fall <- lm(Fall_Rate ~ hos_density + hh_size, data=analysis))
 summary(com.spring <- lm(Spring_Rate ~ comm_cen_dens +
                            high_school, data=analysis)) #Significant Model 
 broom::glance(hos.spring)
+
 summary(com.fall <- lm(Fall_Rate ~ comm_cen_dens + high_school + 
                          public_transit, data=analysis)) #Same AIC when I with and without public transit 
+
 broom::glance(com.fall)
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#+Re Analysis of OLS Models#
-
-#library(MASS)
-#library(olsrr)
+#+Re Analysis of OLS Models with Smaller Dataset#
 
 a2 <- analysis[c(-4,-9), ] #Remove Mattpan and Dorchester from dataset, down from n = 15 to n = 13 observations
 
@@ -163,7 +144,6 @@ summary(pdf <- lm(Fall_Rate ~ pop_density + hh_size + high_school +
                      service_employed + Hispanic + public_transit, data=a2))
 
 #Diagnostics from OLS Model
-
 opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 plot(pda, las = 1) #Dorchester, Mattapan and Roxbury appear to have either high leverage or residual in the data. 
 
@@ -224,8 +204,6 @@ summary(m3)
 
 vif(m3)
 
-#--------
-
 summary(p.fall.count <- glm(formula = Fall_Case_Count ~ pop_density
                             + hh_size + public_transit, family = quasipoisson, data = analysis))
 
@@ -241,7 +219,6 @@ summary(open.fall.count <- glm(formula = Fall_Case_Count ~ open_space + pop_dens
 vif(open.fall.count)
 
 #Model Diagnostics
-
 
 #DFBETA Plots
 dfbetaPlots(open.spr.count)
