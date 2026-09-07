@@ -4,7 +4,9 @@ gc()            # Clear unused memory
 cat("\f")       # Clear the console
 
 
-library.list <- c("ppcor","Hmisc","ggplot2","knitr","data.table","tidyverse") # this is a list of libraries we will be using
+library.list <- c("ppcor","Hmisc","ggplot2","knitr",
+                  "data.table","tidyverse","olsrr",
+                  "car","sandwich","msm", "msm") # this is a list of libraries we will be using
 # foreign is a package that allows us to read spss data in r
 # The rcorr( ) function in the Hmisc package produces correlations/covariances and significance levels for pearson  correlations.
 # ppcor provides functions that Calculate parital and semi-partial (part) correlations along with p value.
@@ -144,7 +146,9 @@ broom::glance(com.fall)
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #+Re Analysis of OLS Models#
 
-library(MASS)
+#library(MASS)
+#library(olsrr)
+
 a2 <- analysis[c(-4,-9), ] #Remove Mattpan and Dorchester from dataset, down from n = 15 to n = 13 observations
 
 correlation_matrix(a2,
@@ -173,14 +177,8 @@ ols_vif_tol(pdf)
 #Covariates HH Size, High_scool, service_employed, and Hispanic have low tolerance and VIF > 5
 #(i.e.,  low variance independent from other variables)
 
-library(ppcor)
-library(olsrr)
-
-
 summary(pts <- lm(Spring_Rate ~ pop_density + Hispanic + public_transit, data=a2)) 
-summary(ptf <- lm(Fall_Rate ~ pop_density + Hispanic + public_transit, data=a2)) 
-
-#Trust this model above more, adj. R-adjusted value is 65.45% variance between each other
+summary(ptf <- lm(Fall_Rate ~ pop_density + Hispanic + public_transit, data=a2)) #Trust this model above more, adj. R-adjusted value is 65.45% variance between each other
 
 ols_vif_tol(pts)
 ols_vif_tol(ptf)
@@ -189,24 +187,26 @@ ols_vif_tol(ptf)
 spcor(as.matrix(analysis))
 
 ##Hospital Density
-summary(hos.spring <- lm(Spring_Rate ~ hos_density +  hh_size + high_school + 
+summary(hs <- lm(Spring_Rate ~ hos_density +  hh_size + high_school + 
                            service_employed + Hispanic + public_transit, data = a2))
 
-ols_vif_tol(hos.spring)
+ols_vif_tol(hs)
 
 #Removed Hispanic due to low variance based on part correlation between Hispanic and Spring Rate (Spring COVID-19 incidence)
-summary(hos.sp.3 <- lm(Spring_Rate ~ hos_density + hh_size + public_transit, data = a2)) 
+summary(hs3 <- lm(Spring_Rate ~ hos_density + hh_size + public_transit, data = a2)) 
 #Put back in Hispanic, remove high school
 
-ols_vif_tol(hos.sp.3)
+ols_vif_tol(hs3)
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#
+#Quasi-Poisson Regression
+#QuasiPoisson model may be better since the dataset has a small sample size
 #This analysis will be using both Spring and Fall Case Counts
-library(ggplot2)
-library(sandwich)
-library(msm)
-library(car)
+
+#library(ggplot2)
+#library(sandwich)
+#library(msm)
+#library(car)
 
 #Correlation Tests
 
@@ -216,18 +216,13 @@ print(cor_matrix)
 #Partial Correlation for Data set
 spcor(as.matrix(analysis))
 
-#QuasiPoisson model may be better since the dataset has a small sample size
+#Model 
 m3 <- glm(Spring_Case_Count ~ pop_density + 
             hh_size + public_transit, family = quasipoisson, data = analysis)
 
 summary(m3)
 
-
-
-
 vif(m3)
-
-colnames(analysis)
 
 #--------
 
@@ -245,7 +240,7 @@ summary(open.fall.count <- glm(formula = Fall_Case_Count ~ open_space + pop_dens
 
 vif(open.fall.count)
 
-#Model Diagnostic
+#Model Diagnostics
 
 
 #DFBETA Plots
@@ -253,7 +248,6 @@ dfbetaPlots(open.spr.count)
 dfbetaPlots(open.fall.count)
 
 #Cook's Distance Plots
-
 plot(open.spr.count, which = 4)
 plot(open.fall.count, which = 4)
 
@@ -262,6 +256,5 @@ plot(open.spr.count, which = 5)
 plot(open.fall.count, which = 5)
 
 #Residuals
-
 ols_plot_resid_stud(open.spr.count)
 ols_plot_resid_stud(open.fall.count)
