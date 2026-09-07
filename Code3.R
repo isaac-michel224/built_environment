@@ -147,6 +147,12 @@ broom::glance(com.fall)
 library(MASS)
 a2 <- analysis[c(-4,-9), ] #Remove Mattpan and Dorchester from dataset, down from n = 15 to n = 13 observations
 
+correlation_matrix(a2,
+                   type = "pearson", 
+                   digits = 2, 
+                   show_significance = TRUE,
+)
+
 summary(pda <- lm(Spring_Rate ~ pop_density + hh_size + high_school + 
                      service_employed + Hispanic + public_transit, data=a2))
 summary(pdf <- lm(Fall_Rate ~ pop_density + hh_size + high_school + 
@@ -155,25 +161,21 @@ summary(pdf <- lm(Fall_Rate ~ pop_density + hh_size + high_school +
 #Diagnostics from OLS Model
 
 opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
-plot(pd_a, las = 1)
-
-#Dorchester, Mattapan and Roxbury appear to have either high leverage or residual in the data. 
-
-###VIF
-library(ppcor)
-library(olsrr)
+plot(pda, las = 1) #Dorchester, Mattapan and Roxbury appear to have either high leverage or residual in the data. 
 
 ols_vif_tol(pda)
 ols_vif_tol(pdf)
+
 #The indicator variable, population density(Tolerance = 0.26, VIF = 3.82) 
 #has 26% of variance completely independent from other variables
 #The covariate, the proportion of people who commute to work via public transit (Tolerance = 0.29, VIF ~ 3.43) has 
 #29% of the variance completely independent from the other variables
-#+Covariates HH Size, High_scool, service_employed, and Hispanic have low tolerance and VIF > 5
-#+(i.e.,  low variance independent from other variables)
+#Covariates HH Size, High_scool, service_employed, and Hispanic have low tolerance and VIF > 5
+#(i.e.,  low variance independent from other variables)
 
+library(ppcor)
+library(olsrr)
 
-#When I drop it, the variance decreases significantly
 
 summary(pts <- lm(Spring_Rate ~ pop_density + Hispanic + public_transit, data=a2)) 
 summary(ptf <- lm(Fall_Rate ~ pop_density + Hispanic + public_transit, data=a2)) 
@@ -191,24 +193,12 @@ summary(hos.spring <- lm(Spring_Rate ~ hos_density +  hh_size + high_school +
                            service_employed + Hispanic + public_transit, data = a2))
 
 ols_vif_tol(hos.spring)
-anova(hos.spring, hos.sp.2)
 
 #Removed Hispanic due to low variance based on part correlation between Hispanic and Spring Rate (Spring COVID-19 incidence)
 summary(hos.sp.3 <- lm(Spring_Rate ~ hos_density + hh_size + public_transit, data = a2)) 
 #Put back in Hispanic, remove high school
 
 ols_vif_tol(hos.sp.3)
-
-#Partial Correlation for 'a2' Data set
-spcor(as.matrix(analysis))
-
-correlation_matrix(a2,
-                   type = "pearson", 
-                   digits = 2, 
-                   show_significance = TRUE,
-)
-
-
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #
@@ -218,6 +208,13 @@ library(sandwich)
 library(msm)
 library(car)
 
+#Correlation Tests
+
+cor_matrix <- cor(analysis, use = "complete.obs")
+print(cor_matrix)
+
+#Partial Correlation for Data set
+spcor(as.matrix(analysis))
 
 #QuasiPoisson model may be better since the dataset has a small sample size
 m3 <- glm(Spring_Case_Count ~ pop_density + 
@@ -225,10 +222,7 @@ m3 <- glm(Spring_Case_Count ~ pop_density +
 
 summary(m3)
 
-#Correlation Tests
 
-cor_matrix <- cor(analysis, use = "complete.obs")
-print(cor_matrix)
 
 
 vif(m3)
